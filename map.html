@@ -32,6 +32,13 @@
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <style>
+        .vcenter {
+            display: inline-block;
+            vertical-align: middle;
+            float: none;
+        }
+    </style>
     <![endif]-->
 
 </head>
@@ -63,11 +70,17 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
-	<div class="row" id="rowevents">
+	<div class="row" >
+        <div class="col-md-7 vertical-align">
+            <div id='rowevents'>
 
+           </div>
+        </div>
+        <div class="col-md-4">
+            <div id="map"></div>
+        </div>
+    </div>
 
-
-	</div>
 
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
@@ -84,7 +97,7 @@
     <script src="js/creative.js"></script>
 	
     <script src="http://maps.googleapis.com/maps/api/js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+
 
     <!-- Event Detail -->
     <script src="js/map.js"></script>

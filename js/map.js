@@ -63,10 +63,44 @@ xmlhttp.onreadystatechange = function() {
         events= myArr["data"]
         console.log(events.length)
         myFunction2(myArr["data"])
+        initMap(events)
+    }
 
+}
+
+function initMap(events) {
+    var myLatLng = {lat: 35, lng: -80};
+
+    // Create a map object and specify the DOM element for display.
+    var map = new google.maps.Map(document.getElementById('map'), {
+        center: myLatLng,
+        scrollwheel: false,
+        zoom: 7
+    });
+    var i;
+    for(i = 0; i < events.length; i++) {
+        // Create a marker and set its position.
+        var myposition={lat:events[i]["latitude"], lng:events[i]["longitude"]}
+        var marker = new google.maps.Marker({
+            map: map,
+            position: myposition,
+            title: events[i]["name"]
+        });
+
+        var infoWindow = new google.maps.InfoWindow();
+
+        marker.content = '<div class="infoWindowContent">' + events[i]["description"] + '</div>';
+
+        google.maps.event.addListener(marker, 'click', function(){
+            infoWindow.setContent('<h2>' + marker.title + '</h2>' + marker.content);
+            infoWindow.open(map, marker);
+        });
     }
 }
+
+/*
 console.log(events)
+
 
 var map = {};
 
@@ -75,6 +109,9 @@ var MapModule = angular.module('mapsApp', ['ngRoute']);
 
 console.log(events)
 MapModule.controller('MapCtrl', function ($scope) {
+
+
+
     console.log("false")
     var mapOptions = {
         zoom: 4,
@@ -129,11 +166,11 @@ MapModule.controller('EventBoxCtrl', function ($scope) {
     }
 
 });
-
+*/
 xmlhttp.open("GET", url, true);
 xmlhttp.send();
 function myFunction2(events) {
-    var mystr = '<div class="col-md-4 portfolio-item">\
+    var mystr = '<div class="col-md-4 ">\
                             <div class="service-box" ng-mouseover="hoverIn(numberid)" ng-mouseleave="hoverOut(numberid)">\
                             <a href="#">\
                             <img class="img-responsive" src="photo/cover/image" alt="">\
@@ -143,21 +180,28 @@ function myFunction2(events) {
                            </div>\
                            </div>'
     var j;
-    var allstr='<div class="col-md-7" ng-controller="EventBoxCtrl">'
+    var allstr='<div class="col-md-12">'
     var currentstr
     for (j = 0; j < Math.min(events.length, 6); j++) {
         currentstr = mystr
         var tempstr = j;
         tempstr.toString()
         currentstr = currentstr.replace("numberid", tempstr)
+        currentstr = currentstr.replace("numberid", tempstr)
         currentstr =currentstr.replace("image",tempstr+".jpg")
         currentstr = currentstr.replace(/projectname/i, events[j]["name"])
-        currentstr = currentstr.replace(/description/i, events[j]["description"].substring(1, 80))
+        currentstr = currentstr.replace(/description/i, events[j]["description"].substring(0, 80))
         allstr +=currentstr
+
+        if((j+1)%3==0&&j!=Math.min(events.length,6)-1)
+        {
+            allstr +='</div><div class="col-md-12">'
+        }
     }
-    allstr +='<div class="col-md-4">\
-                <div id="map" ng-controller="MapCtrl">\
-               </div>'
+
+    allstr +='</div>'
+
+
     document.getElementById("rowevents").innerHTML = allstr;
 
     console.log("1")
