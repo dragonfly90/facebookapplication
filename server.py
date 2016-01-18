@@ -30,4 +30,4 @@ def comments_handler():
     return Response(json.dumps(comments), mimetype='application/json', headers={'Cache-Control': 'no-cache'})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=int(os.environ.get("PORT",80)))
+    app.run(host='127.0.0.1',port=int(os.environ.get("PORT",80)))
